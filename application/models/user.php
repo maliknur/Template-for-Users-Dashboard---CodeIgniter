@@ -25,11 +25,20 @@ class User extends CI_Model {
 		}
 	}
 
+
+	// GET ALL USERS
+	public function get_all_users()
+	{
+		return $this->db->query("SELECT * FROM users")->result_array();
+		
+	}
+
+
+
 	// INSERT USER INTO DATABASE
 
 	public function insert($data)
 	{
-
 		//check if email already exist in database
 
 		$condition = "email =". "'".$data['email']."'";
@@ -58,9 +67,38 @@ class User extends CI_Model {
 	}
 
 
+	// public function create_admin($data)
+	// {
+
+	// 	// insert admin into database;
+		
+	// 	$data = array(
+
+	// 		'first_name' => $data['first_name'],
+	// 		'last_name' => $data['last_name'],
+	// 		'email' => $data['email'],
+	// 		'password'=>$data['password'],
+	// 		'created_at'=>$data['created_at']),
+	// 		'updated_at'=>$data['updated_at']),
+	// 		'user_level' => "admin",
+	// 		'description' => "I am admin!"
+	// 		);
+
+	// 		$result = $this->db->insert('users', $data);
+	// 		if($result)
+	// 		{
+	// 			return true;
+	// 		}
+	// 		else{
+	// 			die('mistake during insert admin to database');
+	// 		}
 
 
+			
+	
+
+		
+	} 
 
 
-}
 

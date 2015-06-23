@@ -13,7 +13,7 @@
 	<title>Sign In</title>
 </head>
 <body>
-<?php include_once('header.php'); ?>
+<?php include('header.php'); ?>
 
 
 <div class="container">

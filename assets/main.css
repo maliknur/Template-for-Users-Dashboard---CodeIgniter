@@ -8,3 +8,19 @@ body{
 /*#link_register{
 	margin-left: 120px;
 }*/
+
+#user_logoff{
+	color:white;
+	text-decoration: none;
+}
+#user_logoff:hover{
+	color:white;
+	text-decoration: none;
+}
+
+.panel{
+	
+	margin-top: 40px;
+	margin-right: 20px;
+	margin-left: 20px;
+}

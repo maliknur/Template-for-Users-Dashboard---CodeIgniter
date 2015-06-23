@@ -17,6 +17,7 @@
 <!-- NAVBAR -->
 
 	<?php include_once('header.php'); ?>
+	
 
 	<!-- JUMBOTRON part -->
 	<div class="container">

@@ -35,7 +35,7 @@ class Users extends CI_Controller {
 		{
 			$this->view_data['errors'] = validation_errors();
 			$this->session->set_flashdata('messages', $this->view_data['errors']);
-			$this->load->view('index');
+			$this->load->view('register');
 
 		}
 
@@ -45,7 +45,7 @@ class Users extends CI_Controller {
 
 		{
 			$this->session->set_flashdata('messages', "Passwords should match");
-			$this->load->view('index');
+			$this->load->view('register');
 		}
 		else // if everything is ok, proceed to user insert to database
  		{
@@ -58,7 +58,9 @@ class Users extends CI_Controller {
 			'email' => $this->input->post('email'),
 			'password'=>md5($this->input->post('password')),
 			'created_at'=>date('Y-m-d H:i:s', time()),
-			'updated_at'=>date('Y-m-d H:i:s', time())
+			'updated_at'=>date('Y-m-d H:i:s', time()),
+			'user_level' => "normal",
+			'description' => "No description yet"
 			);
 		
 
@@ -68,21 +70,19 @@ class Users extends CI_Controller {
 			if($result)
 			{	
 				$this->session->set_flashdata('messages1', 'User added successully');
-				$this->load->helper('url');
-                redirect(base_url());
+				
+                redirect('dashboard');
 			}
 			else
 			{
-				$this->session->set_flashdata('messages', 'Emails exists');
-				$this->load->helper('url');
-                redirect(base_url());
+				$this->session->set_flashdata('messages', 'Email already exists');
+		
+                redirect('register');
 			}
 
 		}
 
 	}
-
-
 
 
 	public function login()
@@ -94,6 +94,7 @@ class Users extends CI_Controller {
 		}
 		else
 		{
+		
 
 		$email = $this->input->post('email');
 		$password = md5($this->input->post('password'));
@@ -108,15 +109,22 @@ class Users extends CI_Controller {
 				'first_name' => $user['first_name'],
 				'last_name' => $user['last_name'],
 				'email' => $user['email'],
+				'user_level'=> $user['user_level'],
 				'is_logged_in' => true
+
 			);
 
 
 			$this->session->set_userdata('user',$user);
 
+			if($user['user_level']== 'admin'){
 
+				redirect(base_url('dashboard/'.$user['user_level']));	
+			}
+			else{
 			
-             $this->load->view('dashboard');
+            $this->load->view('dashboard');
+            }
 		}
 		else
 		{
@@ -129,10 +137,10 @@ class Users extends CI_Controller {
 
 	}
 
-	public function logout()
+	public function logoff()
 	{
 		$this->session->sess_destroy();
-		$this->load->view('index');
+		redirect(base_url('index'));
 		
 	}
 
@@ -147,7 +155,15 @@ class Users extends CI_Controller {
 
 	public function dashboard()
 	{
-		$this->load->view('dashboard');
+		$this->load->model('User');
+		$data= $this->User->get_all_users();
+		$this->load->view('dashboard', array('data' => $data));
+
+	}
+
+	public function edit($num)
+	{
+		$this->load->view('edit');	
 	}
 
 }
