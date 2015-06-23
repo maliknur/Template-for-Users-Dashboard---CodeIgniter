@@ -9,7 +9,7 @@ class User extends CI_Model {
 	public function get_user_by_email($email)
 	{
 		$this->db->select('*');
-		$this->db->from('dojo.users');
+		$this->db->from('users');
 		$this->db->where('email', $email);
 		$query = $this->db->get();
 

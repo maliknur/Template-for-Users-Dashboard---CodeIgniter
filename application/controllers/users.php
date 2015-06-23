@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Users extends CI_Controller {
 
 	
 	public function __construct()
@@ -88,6 +88,13 @@ class Login extends CI_Controller {
 	public function login()
 	{
 		
+		if($this->session->userdata('logged_in' === TRUE))
+		{
+			redirect('dashboard');
+		}
+		else
+		{
+
 		$email = $this->input->post('email');
 		$password = md5($this->input->post('password'));
 		$this->load->model('User');
@@ -109,16 +116,16 @@ class Login extends CI_Controller {
 
 
 			
-             $this->load->view('welcome');
+             $this->load->view('dashboard');
 		}
 		else
 		{
-			$this->session->set_flashdata('messages', "invalid emial or password");
+			$this->session->set_flashdata('messages', "invalid email or password");
 			
-			$this->load->view('index');
+			$this->load->view('signin');
 		}
 
-
+		}
 
 	}
 
@@ -127,6 +134,20 @@ class Login extends CI_Controller {
 		$this->session->sess_destroy();
 		$this->load->view('index');
 		
+	}
+
+	public function signin()
+	{
+		$this->load->view('signin');
+	}
+
+	public function register(){
+		$this->load->view('register');
+	}
+
+	public function dashboard()
+	{
+		$this->load->view('dashboard');
 	}
 
 }

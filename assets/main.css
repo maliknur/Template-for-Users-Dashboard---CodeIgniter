@@ -1,18 +1,10 @@
-*{
-	
-	margin: 0;
-	padding: 0;
+body{
+	padding-top: 50px;
 }
 
-.darkBG{
-	
-	background: #999;
+#link{
+	margin-left: 30px;
 }
-
-.darkerBG{
-	background: #666;
-}
-
-.darkestBG{
-	background: #333;
-}
+/*#link_register{
+	margin-left: 120px;
+}*/
