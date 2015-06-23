@@ -78,7 +78,7 @@
 			<div class="form-group">
 				<div >
 					<button type="submit" class="col-lg-2 col-lg-offset-9 btn btn-success">
-						Register
+						Create
 					</button>
 				</div>
 			</div>
@@ -87,7 +87,7 @@
 
 		
 				
-		<a href="signin" class="col-lg-offset-5">Already have an account? Signin</a>
+		<!-- <a href="signin" class="col-lg-offset-5">Already have an account? Signin</a> -->
 	
 	</div>
 

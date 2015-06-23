@@ -24,7 +24,7 @@
 			<ul class="nav navbar-nav">
 				<li><a href="/">Home</a>
 				<li><a href="/dashboard">Dashboard</a>
-				<li><a href="#">Profile</a>
+				<li><a href="/users/edit">Profile</a>
 				<li><a href="#">Home</a>	
 			</ul>
 

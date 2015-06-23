@@ -17,9 +17,22 @@ include('header.php');
 
 <div class="container">
 	<div class="row">
-		<h3>Manage users
-		<a href="/users/new" class="btn btn-success navbar-btn navbar-right">Add new</a>
-		</h3>
+
+<?php $user = $this->session->userdata('user');
+
+		if($user['user_level'] == 'admin'){
+		echo "<h3>Manage users";
+		echo "<a href=\"/users/new\" class=\"btn btn-success navbar-btn navbar-right\">Add new</a>
+		</h3>";
+
+		}
+		else
+		{
+		echo "<h3>All users</h3>";
+
+		}
+ ?>
+		
 	</div>
 	<br>
 		 <?php 
@@ -41,7 +54,12 @@ include('header.php');
 				?>
 
 	<div class="row">
-		<table class="table table-responsive table-striped table-bordered">
+		
+		<?php 
+			// Admin view of table	
+			if($user['user_level'] == 'admin'){
+
+			echo "<table class=\"table table-responsive table-striped table-bordered\">
 			<tr>
 				<th>ID</th>
 				<th>Name</th>
@@ -49,31 +67,50 @@ include('header.php');
 				<th>created at</th>
 				<th>user level</th>
 				<th>actions</th>
-			</tr>
+			</tr>";
 			
-
-				<?php 
-				
-
-				
-					foreach ($data as $key => $value2) {
-				echo "<tr>";		
-				echo "<td>".$value2['id']."</td>";
-				echo "<td>".$value2['first_name']." ".$value2['last_name']."</td>";
-				echo "<td>".$value2['email']."</td>";
-				echo "<td>".$value2['created_at']."</td>";
-				echo "<td>".$value2['user_level']."</td>";
-				echo "<td><a href=\"/users/edit/".$value2['id']."\">edit</a>&nbsp;&nbsp;&nbsp;<a href=\"users/remove/".$value2['id']."\">remove</a></td>";	
-				echo "</tr>";
+			foreach ($data as $key => $value2) {
+					echo "<tr>";		
+					echo "<td>".$value2['id']."</td>";
+					echo "<td><a href=\"/users/show/".$value2['id']."\">".$value2['first_name']." ".$value2['last_name']."</a></td>";
+					echo "<td>".$value2['email']."</td>";
+					echo "<td>".date('M dS Y',strtotime($value2['created_at']))."</td>";
+					echo "<td>".$value2['user_level']."</td>";
+					echo "<td><a href=\"/users/edit/".$value2['id']."\">edit</a>&nbsp;&nbsp;&nbsp;<a href=\"/users/delete/".$value2['id']."\">remove</a></td>";	
+					echo "</tr>";
 
 
 					}
-				
-				
+				}
+			echo "</table>";
+		
+			// Normal view of table	
 
-				?>
-				
-		</table>
+			if($user['user_level'] == 'normal'){
+
+			echo "<table class=\"table table-responsive table-striped table-bordered\">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>email</th>
+				<th>created at</th>
+				<th>user level</th>
+			
+			</tr>";
+			
+			foreach ($data as $key => $value2) {
+					echo "<tr>";		
+					echo "<td>".$value2['id']."</td>";
+					echo "<td><a href=\"/users/show/".$value2['id']."\">".$value2['first_name']." ".$value2['last_name']."</td>";
+					echo "<td>".$value2['email']."</td>";
+					echo "<td>".date('M dS Y',strtotime($value2['created_at']))."</td>";
+					echo "<td>".$value2['user_level']."</td>";	
+					echo "</tr>";
+					}
+				}
+			echo "</table>";
+
+		?>
 	</div>
 </div>
 

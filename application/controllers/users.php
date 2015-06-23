@@ -85,6 +85,10 @@ class Users extends CI_Controller {
 	}
 
 
+
+
+
+
 	public function login()
 	{
 		
@@ -123,7 +127,7 @@ class Users extends CI_Controller {
 			}
 			else{
 			
-            $this->load->view('dashboard');
+            redirect(base_url('dashboard/'.$user['user_level']));
             }
 		}
 		else
@@ -145,8 +149,15 @@ class Users extends CI_Controller {
 	}
 
 	public function signin()
-	{
+		{
+		
+		if(!empty($this->session->userdata('user')))
+		{	
+			redirect('dashboard');
+		}
+		else{
 		$this->load->view('signin');
+		}
 	}
 
 	public function register(){
@@ -154,7 +165,12 @@ class Users extends CI_Controller {
 	}
 
 	public function dashboard()
-	{
+	{	
+		if(empty($this->session->userdata('user')))
+		{	
+			redirect('signin');
+		}	
+
 		$this->load->model('User');
 		$data= $this->User->get_all_users();
 		$this->load->view('dashboard', array('data' => $data));
@@ -162,8 +178,181 @@ class Users extends CI_Controller {
 	}
 
 	public function edit($num)
+	{	
+		if(!empty($num))
+		{
+			$this->load->model('User');
+			$result['result'] = $this->User->get_user_by_id($num);
+
+			$this->load->view('edit', $result);	
+		}
+		else
+		{
+		$user = $this->session->userdata('user');
+		var_dump($user);
+		die('here');
+
+		$this->load->model('User');
+		$result['result'] = $this->User->get_user_by_id($num);
+
+		$this->load->view('edit', $result);	
+
+		}
+
+
+	}
+
+	public function edit1()
 	{
-		$this->load->view('edit');	
+		$user = $this->session->userdata('user');
+		
+		$this->session->set_userdata('profile', true);
+			
+		$user_id = $user['user_id'];
+		
+		$this->edit($user_id);
+		
+		// $this->load->model('User');
+		// $result['result'] = $this->User->get_user_by_id($num);
+
+		// $this->load->view('edit/', $result);	
+
+	}
+
+
+
+
+	
+
+
+	public function update()
+	{
+		$data = array(
+					'id' => $this->input->post('user_id'),
+					'first_name' => $this->input->post('first_name'),
+					'last_name' => $this->input->post('last_name'),
+					'email'=> $this->input->post('email'),
+					'user_level' => $this->input->post('user_level')
+				);
+
+
+		
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+
+		
+
+		if($this->form_validation->run()=== FALSE)
+		{
+			$this->view_data['errors'] = validation_errors();
+			$this->session->set_flashdata('messages', $this->view_data['errors']);
+			redirect(base_url('/users/edit/'.$data['id']));
+			break;
+
+		}
+
+
+		$this->load->model('User');
+
+		$check = $this->User->check_email($data);
+
+		if ($check == false) {
+			$this->session->set_flashdata('messages', "Email already exist");
+			redirect(base_url('/users/edit/'.$data['id']));
+		}
+
+
+		$result = $this->User->update($data);
+		if($result == true)
+		{	
+			$this->session->set_flashdata('messages1', 'User updated successfully');
+			$this->dashboard();	
+		}
+		else
+		{
+			$this->session->set_flashdata('messages', 'User was not updated');	
+			$this->load->view('edit', $data['id']);	
+		}
+
+	}
+
+
+	public function pwdupdate()
+	{
+		$data = array(
+					'password' => md5($this->input->post('password')),
+					'id' => $this->input->post('user_id')
+				);
+
+		$password2 = md5($this->input->post('password2'));
+
+
+		
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required');
+		$this->form_validation->set_rules('password2', 'Password', 'trim|required');
+		
+
+		if($this->form_validation->run()=== FALSE)
+		{
+			$this->view_data['errors'] = validation_errors();
+			$this->session->set_flashdata('messages_pwd', $this->view_data['errors']);
+			redirect(base_url('/users/edit/'.$data['id']));
+			break;
+
+		}
+
+		if($data['password'] !== $password2)
+
+		{
+			$this->session->set_flashdata('messages_pwd', "Passwords should match");
+			redirect(base_url('/users/edit/'.$data['id']));
+			break;
+		}
+
+		$this->load->model('User');
+		
+		$result = $this->User->update($data);
+
+		//check password update result
+		if($result == true)
+		{	
+			$this->session->set_flashdata('messages1', 'User updated successfully');
+			$this->dashboard();	
+		}
+		else
+		{
+			$this->session->set_flashdata('messages', 'User was not updated');	
+			$this->load->view('edit', $data['id']);	
+		}
+
+
+
+
+
+	}
+
+
+
+	public function delete($num)
+	{
+		$this->load->model('User');
+		
+		$result = $this->User->delete($num);
+
+		//check delete user result
+		if($result == true)
+		{	
+			$this->session->set_flashdata('messages1', 'User deleted successfully');
+			$this->dashboard();	
+		}
+		else
+		{
+			$this->session->set_flashdata('messages', 'User was not deleted');	
+			$this->load->view('edit', $data['id']);	
+		}
 	}
 
 }

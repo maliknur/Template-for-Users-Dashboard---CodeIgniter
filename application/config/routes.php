@@ -11,7 +11,12 @@ $route['create'] = 'users/create';
 $route['login'] = "users/login";
 $route['logoff'] = "users/logoff";
 $route['users/new'] = "users/register";
+$route['update'] = "users/update";
+$route['pwdupdate'] = "users/pwdupdate";
+$route['users/edit']="users/edit1";
 $route['users/edit/(:num)']="users/edit/$1";
+
+$route['users/delete/(:num)']="users/delete/$1";
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

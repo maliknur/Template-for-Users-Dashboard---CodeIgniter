@@ -63,7 +63,7 @@
 
 		
 				
-		<a href="register" class="col-lg-offset-4">Don't have an account? Register</a>
+		<!-- <a href="register" class="col-lg-offset-4">Don't have an account? Register</a> -->
 	
 	</div>
 

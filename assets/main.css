@@ -19,8 +19,22 @@ body{
 }
 
 .panel{
-	
+
 	margin-top: 40px;
 	margin-right: 20px;
 	margin-left: 20px;
+}
+
+.col-lg-7{
+	
+	
+	margin-left: -18px;
+}
+
+#select{
+	
+}
+
+#return_dash{
+	margin-top: 10px;
 }

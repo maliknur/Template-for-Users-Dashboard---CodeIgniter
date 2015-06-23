@@ -26,10 +26,45 @@ class User extends CI_Model {
 	}
 
 
+
+	public function update($data)
+	{	
+		$user_id = $data['id'];
+		$table = 'users';
+		$this->db->where('id', $user_id);
+		$result = $this->db->update ($table, $data);
+
+		return $result;
+
+
+	}
+
+	public function delete($num)
+	{	
+		
+		$table = 'users';
+		$this->db->where('id', $num);
+		$result = $this->db->delete($table);
+
+		return $result;
+
+
+	}
+
+
+
+
+
 	// GET ALL USERS
 	public function get_all_users()
 	{
 		return $this->db->query("SELECT * FROM users")->result_array();
+		
+	}
+	// GET ONE USER BY ID
+	public function get_user_by_id($num)
+	{
+		return $this->db->query("SELECT * FROM users WHERE id=".$num)->row_array();
 		
 	}
 
@@ -66,38 +101,42 @@ class User extends CI_Model {
 		}
 	}
 
-
-	// public function create_admin($data)
-	// {
-
-	// 	// insert admin into database;
+	public function check_email($data)
+	{
+		$condition = "email =". "'".$data['email']."'";
+		$this->db->select('*');
+		$this->db->from('users');
+		$this->db->where($condition);
+		$this->db->limit(1);
+		$query = $this->db->get();
 		
-	// 	$data = array(
+		$query_row = $query->result();
 
-	// 		'first_name' => $data['first_name'],
-	// 		'last_name' => $data['last_name'],
-	// 		'email' => $data['email'],
-	// 		'password'=>$data['password'],
-	// 		'created_at'=>$data['created_at']),
-	// 		'updated_at'=>$data['updated_at']),
-	// 		'user_level' => "admin",
-	// 		'description' => "I am admin!"
-	// 		);
+		$id = $query_row[0]->id;
+		
 
-	// 		$result = $this->db->insert('users', $data);
-	// 		if($result)
-	// 		{
-	// 			return true;
-	// 		}
-	// 		else{
-	// 			die('mistake during insert admin to database');
-	// 		}
+		if($query->num_rows() == 0)
+		{ return true;}
+
+		// if email is same with has user to allow use same email 
+		else if($data['id'] == $id)
+			{return true;} 
+		else
+		{return false;}
+
+	}
+
+
+
+
+
+
 
 
 			
 	
 
-		
+
 	} 
 
 
