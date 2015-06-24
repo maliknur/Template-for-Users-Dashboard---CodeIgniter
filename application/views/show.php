@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="../../assets/main.css">
+	<meta charset="UTF-8">
+	<meta name="author" content="Malik Nur">
+	<title>User Information</title>
+</head>
+<body>
+<?php include('header.php'); ?>
+
+<div class="container">
+<div class="row">
+<div class="col-lg-10">
+<h3><?= $result['first_name'] . " " . $result['last_name'] ?></h3>
+<table id="wall_table" class="table table-condensed ">
+	<tr>
+		<th>Registered at:</th>
+		<td><?= date('M dS Y', strtotime($result['created_at'])) ?></td>
+	</tr>
+	<tr>
+		<th>User ID:</th>
+		<td><?= "# " .$result['id'] ?></td>
+	</tr>
+	<tr>
+		<th>Email address:</th>
+		<td><?= $result['email'] ?></td>
+	</tr>
+	<tr>
+		<th>Description:</th>
+		<td><?= $result['description'] ?></td>
+	</tr>
+</table>
+</div>
+</div>	
+
+<div class="row">
+<div class="col-lg-10 col-lg-offset-1 message">
+<br>
+<h3>Leave a message for <?= $result['first_name'];  ?></h3>
+<form action="/users/post" method="post" class="form-horizontal">
+		
+			<div class="form-group">
+				<textarea name="description" class="form-control" rows="3" ></textarea>
+			<div>
+				<button type="submit" class="col-lg-1 col-lg-offset-11 btn btn-success">
+						Post
+					</button>
+				<input type="hidden" name="user_id" value="<?= $result['id']; ?>">
+			</div>
+			</div>
+		</form>
+
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-10 col-lg-offset-1 message">
+
+<?php 
+	
+	foreach ($wall as $key => $value) {
+		
+		echo "<div class=\"col-lg-8\"><h4>".$value['first_name']." ".$value['last_name']." wrote <span style=\"margin-left: 150px;\">".$value['created_at']."</span></h4><p class=\"col-lg-10 bordered\">
+		". $value['message']."</p></div>";
+	}
+	
+ ?>
+
+</div>
+</div>
+
+
+</div>  
+<!-- end of container -->
+
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</body>
+</html>

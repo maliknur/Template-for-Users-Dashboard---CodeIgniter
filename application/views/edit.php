@@ -73,29 +73,36 @@ class="col-md-5 col-md-offset-1">
 				<input class="col-lg-6" type="text" name="last_name" value="<?= $result['last_name']; ?>">
 			</div>
 			</div>
-			
-			<div class="form-group">
-				<label for="level" class="col-lg-5 control-label">User level:</label>
-			<div class="col-lg-7">
-				<select class="col-lg-6 form-control" id="select"  name="user_level">
-				<?php  
-				if($result['user_level'] == 'normal'){ 
-					echo "<option  value=\"normal\" selected =\"selected\">normal 
-					</option>";
-					echo "<option value=\"admin\">admin</option>
-					</select>";
-				}
-				else { 
-					echo "<option  value=\"admin\" selected =\"selected\">admin 
-					</option>";
-					echo "<option value=\"normal\">normal</option>
-					</select>";
-				}
+			<?php  
+
+				$user = $this->session->userdata('user');
+				
+				if($user['user_level']== 'admin'){
+
+		echo  "<div class=\"form-group\">
+				<label for=\"level\" class=\"col-lg-5 control-label\">User level:</label>
+			<div class=\"col-lg-7\">
+				<select class=\"col-lg-6 form-control\" id=\"select\"  name=\"user_level\">";
+				
+					
+					if($result['user_level'] == 'normal'){ 
+						echo "<option  value=\"normal\" selected =\"selected\">normal 
+						</option>";
+						echo "<option value=\"admin\">admin</option>
+						</select>";
+					}
+					else { 
+						echo "<option  value=\"admin\" selected =\"selected\">admin 
+						</option>";
+						echo "<option value=\"normal\">normal</option>
+						</select>";
+					}
 
 
+					echo "</div></div>";
+				}
 				?>
-			</div>
-			</div>
+			
 			
 			<div class="form-group">
 				<div >
@@ -159,12 +166,6 @@ class="col-md-5 col-md-offset-1">
 		</form>
 	
 
-
-
-
-
-
-
 	  </div>
 </div>
 
@@ -175,12 +176,25 @@ class="col-md-5 col-md-offset-1">
 
 <div class="row">
 	
-<div class="col-md-5">
+<div class="col-md-10 col-md-offset-1">
 	
-	<div class="panel panel-default">
+	<div class="panel panel-default" >
 	<div class="panel-heading"><h4>Description</h4>
 	</div>
-	<div class="panel-body">
+	<div class="panel-body" id="description">
+
+		<form action="/description" method="post" class="form-horizontal">
+		
+			<div class="form-group">
+				<textarea name="description" class="form-control" rows="3" ><?= $result['description']; ?></textarea>
+			<div>
+				<button type="submit" class="col-lg-1 col-lg-offset-11 btn btn-success">
+						Save
+					</button>
+				<input type="hidden" name="user_id" value="<?= $result['id']; ?>">
+			</div>
+			</div>
+		</form>
 	</div>
 	</div>
 </div>

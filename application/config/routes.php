@@ -15,8 +15,9 @@ $route['update'] = "users/update";
 $route['pwdupdate'] = "users/pwdupdate";
 $route['users/edit']="users/edit1";
 $route['users/edit/(:num)']="users/edit/$1";
-
+$route['description']="users/description";
 $route['users/delete/(:num)']="users/delete/$1";
+$route['users/show/(:num)'] = "walls/show/$1";
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

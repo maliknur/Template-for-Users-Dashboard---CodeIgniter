@@ -25,10 +25,10 @@ class Users extends CI_Controller {
 	{	
 		//validate forms
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
-		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required');
-		$this->form_validation->set_rules('password', 'password', 'trim|required');
+		$this->form_validation->set_rules('first_name', 'First Name', 'alpha|trim|required');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'alpha|trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|required');
+		$this->form_validation->set_rules('password', 'password', 'trim|required|matches[password2]');
 		$this->form_validation->set_rules('password2', 'password2', 'trim|required');
 
 		if($this->form_validation->run()=== FALSE)
@@ -71,13 +71,13 @@ class Users extends CI_Controller {
 			{	
 				$this->session->set_flashdata('messages1', 'User added successully');
 				
-                redirect('dashboard');
+                redirect(base_url('dashboard'));
 			}
 			else
 			{
 				$this->session->set_flashdata('messages', 'Email already exists');
 		
-                redirect('register');
+                redirect(base_url('register'));
 			}
 
 		}
@@ -168,7 +168,7 @@ class Users extends CI_Controller {
 	{	
 		if(empty($this->session->userdata('user')))
 		{	
-			redirect('signin');
+			redirect(base_url('signin'));
 		}	
 
 		$this->load->model('User');
@@ -189,8 +189,7 @@ class Users extends CI_Controller {
 		else
 		{
 		$user = $this->session->userdata('user');
-		var_dump($user);
-		die('here');
+		
 
 		$this->load->model('User');
 		$result['result'] = $this->User->get_user_by_id($num);
@@ -204,10 +203,15 @@ class Users extends CI_Controller {
 
 	public function edit1()
 	{
+		if(empty($this->session->userdata('user')))
+		{	
+			redirect(base_url('signin'));
+		}	
+
 		$user = $this->session->userdata('user');
 		
 		$this->session->set_userdata('profile', true);
-			
+
 		$user_id = $user['user_id'];
 		
 		$this->edit($user_id);
@@ -354,5 +358,41 @@ class Users extends CI_Controller {
 			$this->load->view('edit', $data['id']);	
 		}
 	}
+
+
+
+
+	public function description()
+	{
+		$data = array(
+					'description' => $this->input->post('description'),
+					'id' => $this->input->post('user_id')
+				);
+
+
+
+
+		$this->load->model('User');
+		
+		$result = $this->User->update($data);
+
+		//check password update result
+		if($result == true)
+		{	
+			$this->session->set_flashdata('messages1', 'User updated successfully');
+			$this->dashboard();	
+		}
+		else
+		{
+			$this->session->set_flashdata('messages', 'User was not updated');	
+			$this->load->view('edit', $data['id']);	
+		}
+
+
+
+	}
+
+
+
 
 }

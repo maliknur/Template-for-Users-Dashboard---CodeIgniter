@@ -5,9 +5,9 @@ body{
 #link{
 	margin-left: 30px;
 }
-/*#link_register{
+#link_register{
 	margin-left: 120px;
-}*/
+}
 
 #user_logoff{
 	color:white;
@@ -26,8 +26,6 @@ body{
 }
 
 .col-lg-7{
-	
-	
 	margin-left: -18px;
 }
 
@@ -38,3 +36,32 @@ body{
 #return_dash{
 	margin-top: 10px;
 }
+
+#description {
+	margin-left: 20px;
+	margin-right: 20px;
+
+}
+#description button{
+	margin-top: 15px;
+}
+
+#wall_table tr, #wall_table td, #wall_table th{
+	border: none;
+}
+
+#wall_table th{
+	margin: 0;
+	width: 120px;
+}
+
+.message button{
+	margin-top: 10px;
+}
+
+.bordered{
+	margin: 10px;
+	padding: 10px;
+	border:1px solid grey;
+}
+

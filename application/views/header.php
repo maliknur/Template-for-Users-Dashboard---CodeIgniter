@@ -6,7 +6,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-			<a href="" class="navbar-brand">Test App</a>
+			<a href="/" class="navbar-brand">Test App</a>
 			</div>
 
 		<div class="collapse navbar-collapse">
@@ -25,13 +25,13 @@
 				<li><a href="/">Home</a>
 				<li><a href="/dashboard">Dashboard</a>
 				<li><a href="/users/edit">Profile</a>
-				<li><a href="#">Home</a>	
+			
 			</ul>
 
 			<?php 
 			if(!empty($this->session->userdata('user'))){
 			echo "<span class=\"navbar-right navbar-btn\" id=\"user_logoff\">";
-			echo $user['first_name']." ".$user['last_name'] .":&nbsp; </span>";
+			echo $user['first_name']." ".$user['last_name'] ."&nbsp;&nbsp; </span>";
 			}
 
 
