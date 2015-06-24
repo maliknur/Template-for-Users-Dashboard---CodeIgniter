@@ -12,8 +12,6 @@ public function get_all_messages_by_id($num)
 
 		if($query){
 
-		
-		
 			return $query;
 
 		}
@@ -21,6 +19,40 @@ public function get_all_messages_by_id($num)
 			return false;
 		}
 	}
+
+
+	public function insert($data, $table){
+
+		$result = $this->db->insert($table, $data);
+
+		if($result){ return true;} else {return false;}
+
+	}
+
+
+	public function get_all_comments_by_id($num)
+	{
+		$query = $this->db->query("SELECT c.messages_id, u.first_name, u.last_name, 
+			c.comment, c.id, c.created_at FROM comments c join users u on u.id = c.users_id
+			where c.messages_id = ".$num)->result_array();
+
+		if($query){
+
+		
+		return $query;
+
+		}
+		else{
+			return false;
+		}
+	}
+
+
+	public function post_comment($data)
+	{
+		
+	}
+
 
 
 

@@ -18,6 +18,8 @@ $route['users/edit/(:num)']="users/edit/$1";
 $route['description']="users/description";
 $route['users/delete/(:num)']="users/delete/$1";
 $route['users/show/(:num)'] = "walls/show/$1";
-
+$route['forum'] = "walls/forum";
+$route['users/post']="walls/post_message";
+$route['users/comment'] = "walls/post_comment";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

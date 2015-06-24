@@ -65,3 +65,29 @@ body{
 	border:1px solid grey;
 }
 
+ul{
+	list-style-type: none;
+}
+
+li{
+	display: block;
+}
+
+
+.bordered1{
+	
+	    border-bottom: 1px dotted silver;
+}
+
+textarea[name=message]{
+	background-color: #F5F5F5;	
+}
+
+textarea[name=comment]{
+	background-color: #F5F5F5;
+	margin-top: 10px;	
+}
+
+
+
+

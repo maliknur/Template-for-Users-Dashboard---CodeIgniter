@@ -13,11 +13,7 @@
 	<title>User Information</title>
 </head>
 <body>
-<?php include('header.php'); 
-$viewer_id = $this->session->userdata['user'];
-
-
-?>
+<?php include('header.php'); ?>
 
 <!-- beginning of container -->
 
@@ -46,20 +42,17 @@ $viewer_id = $this->session->userdata['user'];
 	</div>
 </div>	
 
-<!-- Leave message area - textarea -->
-
 <div class="row">
 	<div class="col-xs-8 col-xs-offset-2 message">
 		<h3>Leave a message for <?= $result['first_name'];  ?></h3>
 		<form action="/users/post" method="post" class="form-horizontal">
 				
 			<div class="form-group">
-			<textarea name="message" class="form-control" rows="3" ></textarea>
+			<textarea name="description" class="form-control" rows="3" ></textarea>
 			<div>
 			<button type="submit" class="col-xs-offset-11 btn btn-success">Post
 			</button>
-			<input type="hidden" name="user_id" value="<?= $viewer_id['user_id']; ?>">
-			<input type="hidden" name="messageboard_id" value="<?= $result['id'] ?>">
+			<input type="hidden" name="user_id" value="<?= $result['id']; ?>">
 			</div>
 			</div>
 		</form>
@@ -69,70 +62,51 @@ $viewer_id = $this->session->userdata['user'];
 
 <!-- message print section -->
 
+<div class="row">
+	<div class="col-xs-8 col-xs-offset-2 message bordered1">
+
 <?php 
 	
 	if(!empty($wall))
 	{
-	
+	echo "<ul class=\"list-group\">";
 	foreach ($wall as $key => $value) {
-
-	//message display
 		
-	echo "<div class=\"row\">";
-		echo "<div class=\"col-xs-8 col-xs-offset-2 message bordered1\">";
-			echo "<h5><i>" .$value['first_name']. " ". $value['last_name']. " wrote <span class =\"col-xs-offset-7\"><small>". $value['created_at']. "</small></span></i></h5>";
-			echo "<p>" .$value['message']. "</p>";
-		echo "</div>";
-	echo "</div>";
-
-		//comments under the message
-
+		echo "<li><p><b>".$value['first_name']." ".$value['last_name']."</b> wrote <span style=\"margin-left: 300px;\">".$value['created_at']."</span><p></li>
+			<li class=\"bordered\"><p>
+		". $value['message']."</p></li>";
+	
+		
 		$comments = $this->db->query("SELECT c.messages_id, u.first_name, u.last_name, c.comment, c.id, c.created_at FROM comments c JOIN users u on u.id = c.users_id
 			WHERE c.messages_id = ".$value['id'])->result_array();
 
-		if(!empty($wall))
-		{
-			
+		
 			foreach ($comments as $key2 => $value2) {
-
-			echo "<div class=\"row\">";
-					echo "<div class=\"col-xs-7 col-xs-offset-3 message bordered1\">";
-						echo "<h5><i>". $value2['first_name']." ". $value2['last_name']. " wrote<span class =\"col-xs-offset-6\"><small>" .$value2['created_at']. "</small></span></i> </h5>";
-						echo "<p>" .$value2['comment']. "</p>";
-
-					echo "</div>";
-				echo "</div>";	
-
+ 	
+			 // DISPLAY COMMENTS
+			echo "<li class = \"intend\"><p>".$value2['first_name']. " ". $value2['last_name']." - ". $value2['created_at'] ." 
+			</p></li><li class = \"intend\"><p>".$value2['comment'] ."</p></li>";
+			 
 			}
-		}
-
-			// Leave comment area - textarea
-
-			echo "<div class=\"row\">";
-				echo "<div class=\"col-xs-7 col-xs-offset-3 message bordered1\">";
-					echo "<form action=\"/users/comment\" method=\"post\" class=\"form-horizontal\">";
-					echo "<div class=\"form-group\">";
-						
-						echo "<textarea name=\"comment\" class=\"form-control\" rows=\"3\" placeholder=\"write a message\"></textarea>";
-					echo "<div>";
-
-					echo "<input type=\"hidden\" name=\"user_id\" value=" . $viewer_id['user_id'] . ">";
-					echo "<input type=\"hidden\" name=\"messages_id\" value=" . $value['id'] . ">";
-					echo "<input type=\"hidden\" name=\"messageboard_id\" value=". $result['id'] .">";
-
-						echo "<button type=\"submit\" class=\"col-xs-offset-11 btn btn-success\">Post</button>";
-						
-					echo "</div>";
-					echo "</div>";
-					echo "</form>";		
-				echo "</div>";
-			echo "</div>";
 
 
+		echo "<ul class=\"list-group col-lg-9 col-lg-offset-1\"><li>Post a comment</li><li><form action=\"comment\" method=\"post\">
+			<textarea name=\"comment\" cols=\"90\ rows=\"10\">
+			</textarea>
+			<input type=\"hidden\" name=\"message_id\" value=\"".$value['id']."\">
+			<button type=\"submit\" class=\"col-lg-2 col-md-offset-12 btn btn-success\">
+						Post
+					</button>
+			</form></li></ul>";
 
 	}
-}
-?>
+	echo "</ul>";
+	}
+ ?>
+
+	</div>
+</div>
+
 
 
 </div> 
