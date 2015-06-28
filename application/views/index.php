@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="../../assets/main.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="../../assets/main.css">
 	<meta charset="UTF-8">
 	<meta name="author" content="Malik Nur">
-	<title>Dashboard</title>
+	
+	<title>Welcome to the Test</title>
 </head>
 <body>
 
@@ -31,25 +30,28 @@
 		  </div>
 
 	</div>
+
 <!-- MAIN SECTION -->
+	
+
 	<div class="container">
 		<section>
 			<div class="row">
 				<div class="col-lg-4">
 					<blockquote>
-						<h3>Manage Users</h3>
+						<h3><a href="/dashboard">Manage Users</a></h3>
 						<p>Using this application, you'll learn how to add, remove, and edit users for the application.</p>
 					</blockquote>
 				</div>
 				<div class="col-lg-4">
 					<blockquote>
-						<h3>Leave messages</h3>
+						<h3><a href="/dashboard">Leave messages</a></h3>
 						<p>Users will be able to leave a message to another user using this application.</p>
 					</blockquote>
 				</div>
 				<div class="col-lg-4">
 					<blockquote>
-						<h3>Edit Users Information</h3>
+						<h3><a href="/dashboard">Edit Users Information</a></h3>
 						<p>Admins will be able to edit another user's information (email address, first name, last name, etc.</p>
 					</blockquote>
 				</div>
@@ -60,9 +62,8 @@
 
 
 
-
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 </body>

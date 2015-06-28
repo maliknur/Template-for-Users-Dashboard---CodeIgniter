@@ -13,14 +13,10 @@ body{
 	color:white;
 	text-decoration: none;
 }
-#user_logoff:hover{
-	color:white;
-	text-decoration: none;
-}
 
 .panel{
 
-	margin-top: 40px;
+	margin-top: 20px;
 	margin-right: 20px;
 	margin-left: 20px;
 }
@@ -29,9 +25,6 @@ body{
 	margin-left: -18px;
 }
 
-#select{
-	
-}
 
 #return_dash{
 	margin-top: 10px;
@@ -73,6 +66,11 @@ li{
 	display: block;
 }
 
+small{
+	
+	float: right;
+}
+
 
 .bordered1{
 	
@@ -87,6 +85,16 @@ textarea[name=comment]{
 	background-color: #F5F5F5;
 	margin-top: 10px;	
 }
+
+
+p {
+	text-align: justify;
+}
+
+#return_dash{
+	margin-top: 30px;
+}
+
 
 
 

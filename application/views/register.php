@@ -2,103 +2,97 @@
 <html lang="en">
 <head>
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="../../assets/main.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="../../assets/main.css">
+	
 	<meta charset="UTF-8">
 	<meta name="author" content="Malik Nur">
+	
 	<title>Register</title>
 </head>
 <body>
+
 <?php include('header.php'); ?>
 
 
 <div class="container">
 
 	<div class="col-lg-6">
-	
-		
-
 		<form action="create" method="post" class="form-horizontal jumbotron">
-			<?php 
-			if(!empty($this->session->flashdata('messages')))
-			{
+			
+		<!-- ERROR DISPLAY SECTION -->
+		<?php 
+		if(!empty($this->session->flashdata('messages')))
+		{
 			echo "<div class=\"alert alert-warning\" role=\"alert\">";
-			 echo $this->session->flashdata('messages');
-			 $this->session->set_flashdata('messages', null);
+			echo $this->session->flashdata('messages');
+			$this->session->set_flashdata('messages', null);
 			echo "</div>";
-			}
+		}
 
-			?>
+		?>
 
 			<div class="form-group well">
+			
 				<h3>Register</h3>
 				
-				<br>
-			<div>
-			<div class="form-group">
-				<div >
-				<a href="/dashboard" class="btn btn-info col-lg-offset-6">Return to Dashboard</a>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="email" class="col-lg-5 control-label">Email:</label>
-			<div>
-				<input class="col-lg-6" type="email" name="email">
-			</div>
-			</div>
-			<div class="form-group">
-				<label for="name" class="col-lg-5 control-label">First name:</label>
-			<div>
-				<input class="col-lg-6" type="text" name="first_name">
-			</div>
-			</div>
-			<div class="form-group">
-				<label for="name" class="col-lg-5 control-label">Last name:</label>
-			<div>
-				<input class="col-lg-6" type="text" name="last_name">
-			</div>
-			</div>
+			<br>
 			
-			<div class="form-group">
-				<label for="password" class="col-lg-5 control-label">Password:</label>
-			<div>
-				<input class="col-lg-6" type="password" name="password">
-			</div>
-			</div>
-			<div class="form-group">
-				<label for="password" class="col-lg-5 control-label">Confirm password:</label>
-			<div>
-				<input class="col-lg-6" type="password" name="password2">
-			</div>
-			</div>
-			<div class="form-group">
-				<div >
-					<button type="submit" class="col-lg-2 col-lg-offset-9 btn btn-success">
+				<div class="form-group">
+					<div class="col-lg-offset-6">
+					<a href="/dashboard" class="btn btn-info ">Return to Dashboard</a>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="email" class="col-lg-5 control-label">Email:</label>
+					<div>
+					<input class="col-lg-6" type="email" name="email">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="name" class="col-lg-5 control-label">First name:</label>
+					<div>
+					<input class="col-lg-6" type="text" name="first_name">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="name" class="col-lg-5 control-label">Last name:</label>
+					<div>
+					<input class="col-lg-6" type="text" name="last_name">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="password" class="col-lg-5 control-label">Password:</label>
+					<div>
+					<input class="col-lg-6" type="password" name="password">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="password" class="col-lg-5 control-label">Confirm password:</label>
+					<div>
+					<input class="col-lg-6" type="password" name="password2">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-2 col-lg-offset-9">
+					<button type="submit" class="btn btn-success">
 						Create
 					</button>
+					</div>
 				</div>
 			</div>
-			
-		</form>
-
-		
-				
-		<!-- <a href="signin" class="col-lg-offset-5">Already have an account? Signin</a> -->
-	
+		</form>	
 	</div>
-
 </div>
 
 
 
 
-
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 </body>

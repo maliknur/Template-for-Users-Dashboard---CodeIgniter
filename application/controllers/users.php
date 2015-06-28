@@ -236,6 +236,7 @@ class Users extends CI_Controller {
 					'first_name' => $this->input->post('first_name'),
 					'last_name' => $this->input->post('last_name'),
 					'email'=> $this->input->post('email'),
+					'updated_at' => date('Y-m-d H:i:s', time()),
 					'user_level' => $this->input->post('user_level')
 				);
 
