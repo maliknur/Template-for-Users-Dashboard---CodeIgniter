@@ -11,6 +11,7 @@ class Users extends CI_Controller {
 
 		$this->load->helper('security');
 		$this->load->library('form_validation');
+		$this->load->library('upload');
 		$this->load->model('User');
 	
 	}
@@ -47,6 +48,11 @@ class Users extends CI_Controller {
  		{
 			
 
+				
+			$img_url = $this->image_upload();	// upload user photo profile
+			
+
+
 			$data = array(
 
 			'first_name' => $this->input->post('first_name'),
@@ -56,7 +62,8 @@ class Users extends CI_Controller {
 			'created_at'=>date('Y-m-d H:i:s', time()),
 			'updated_at'=>date('Y-m-d H:i:s', time()),
 			'user_level' => "normal",
-			'description' => "No description yet"
+			'description' => "No description yet",
+			'profile_img_path'=>$img_url
 			);
 		
 
@@ -79,6 +86,35 @@ class Users extends CI_Controller {
 	}
 
 
+
+	//upload image function
+	public function image_upload()
+	{
+
+			//image upload settings:
+		$config['upload_path'] = './uploads/profilepics';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size'] = 250;
+		$this->load->library('upload', $config);
+
+		$this->upload->initialize($config);
+		
+
+		$this->upload->do_upload('profile_img_path');
+		
+		if (!$this->upload->do_upload('profile_img_path')) {
+		    $error = array('error' => $this->upload->display_errors());
+		    echo $error['error'];
+		}
+
+
+		$data_upload_files = $this->upload->data();
+
+		$image = $data_upload_files['full_path']; 	
+			
+		return $img_url = strstr($image, '/up');	
+
+	}
 
 
 
@@ -119,6 +155,7 @@ class Users extends CI_Controller {
 				'last_name' => $user['last_name'],
 				'email' => $user['email'],
 				'user_level'=> $user['user_level'],
+				'userpic' => $user['profile_img_path'],
 				'is_logged_in' => true
 
 			);
@@ -225,15 +262,19 @@ class Users extends CI_Controller {
 
 	public function update()
 	{
+
+		$img_url = $this->image_upload();
+
+
 		$data = array(
 					'id' => $this->input->post('user_id'),
 					'first_name' => $this->input->post('first_name'),
 					'last_name' => $this->input->post('last_name'),
 					'email'=> $this->input->post('email'),
 					'updated_at' => date('Y-m-d H:i:s', time()),
-					'user_level' => $this->input->post('user_level')
+					'user_level' => $this->input->post('user_level'),
+					'profile_img_path' => $img_url 
 				);
-
 
 		
 		$this->load->library('form_validation');

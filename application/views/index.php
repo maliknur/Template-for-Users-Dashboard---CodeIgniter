@@ -9,7 +9,7 @@
 	<meta charset="UTF-8">
 	<meta name="author" content="Malik Nur">
 	
-	<title>Welcome to the Test</title>
+	<title>Welcome to the Userboard</title>
 </head>
 <body>
 
@@ -22,7 +22,7 @@
 	<div class="container">
 		
 		  <div class="jumbotron ">
-		  	<h1>Welcome to the Test</h1>
+		  	<h1>Welcome to the Userboard</h1>
 		  	<p>We are going to build a cool application using MVC framework! This application was built with Coding Dojo member</p>
 		  	<div class="btn-group">
 		  		<a href="signin" class="btn btn-lg btn-info">Start</a>

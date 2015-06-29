@@ -36,7 +36,7 @@
 	
 
 	<!-- FORM FOR UPDATE USER INFO -->
-	    <form action="/update" method="post" class="form-horizontal">
+	    <form action="/update" method="post" class="form-horizontal" enctype="multipart/form-data">
 			<?php 
 			if(!empty($this->session->flashdata('messages')))
 			{
@@ -112,7 +112,16 @@
 			<?php	}
 				?>
 			
-			
+			<div class="form-group" style="position:relative;">
+					<label class="col-lg-5 control-label"><a class='btn btn-default' href='javascript:;'>
+					Upload photo...
+					<input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' 
+					name="profile_img_path" size="20"  onchange='$("#upload-file-info").html($(this).val());'>
+				</a></label>
+					<div>
+					<span class='col-lg-6 label label-info ' id="upload-file-info"></span>
+					</div>
+				</div>
 			<div class="form-group">
 				<div >
 					<button type="submit" class="col-lg-2 col-lg-offset-9 btn btn-success">

@@ -21,6 +21,8 @@ $viewer_id = $this->session->userdata['user'];
 <div class="container">
 	<div class="row">
 		<div class="col-xs-11 col-xs-offset-1">
+		<div><img class="img-circle" src="<?= $result['profile_img_path'] ?>" alt="user_image"></div>
+
 			<h3><?= $result['first_name'] . " " . $result['last_name'] ?></h3>
 			<table id="wall_table" class="table table-condensed ">
 				<tr>
@@ -71,10 +73,12 @@ $viewer_id = $this->session->userdata['user'];
 		foreach ($wall as $key => $value) {
 ?>
 	<!-- message display -->
-		
+	
+	
 	<div class="row">
 		<div class="col-xs-8 col-xs-offset-2 message bordered1">
-			<h5><i> <?php echo $value['first_name']. " ". $value['last_name']; ?> wrote 
+			<h5><span><img class="image-circle smallpic smallavatar" src="<?= $value['profile_img_path'] ?>" alt=""></span>
+			<i> <?php echo $value['first_name']. " ". $value['last_name']; ?> wrote 
 				<span class ="col-xs-offset-7"><small><?= $value['created_at'] ?></small></span>
 			</i></h5>
 			<p><?= $value['message'] ?></p>
@@ -83,7 +87,7 @@ $viewer_id = $this->session->userdata['user'];
 
 		<?php
 
-		$comments = $this->db->query("SELECT c.messages_id, u.first_name, u.last_name, c.comment, c.id, c.created_at FROM comments c JOIN users u on u.id = c.users_id
+		$comments = $this->db->query("SELECT c.messages_id, u.first_name, u.last_name, u.profile_img_path, c.comment, c.id, c.created_at FROM comments c JOIN users u on u.id = c.users_id
 			WHERE c.messages_id = ".$value['id'])->result_array();
 
 		if(!empty($wall))
@@ -93,7 +97,7 @@ $viewer_id = $this->session->userdata['user'];
 		?>
 			<div class="row">
 				<div class="col-xs-7 col-xs-offset-3 message bordered1">
-					<h5><i><?php echo $value2['first_name']." ". $value2['last_name']; ?> wrote
+					<h5><span><img class="image-circle smallpic smallavatar" src="<?= $value2['profile_img_path'] ?>" alt=""></span><i><?php echo $value2['first_name']." ". $value2['last_name']; ?> wrote
 						<span class ="col-xs-offset-6"><small> <?= $value2['created_at'] ?></small></span>
 					</i></h5>
 					<p><?= $value2['comment'] ?></p>

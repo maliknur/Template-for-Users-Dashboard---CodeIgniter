@@ -60,6 +60,7 @@ include('header.php');
 			<table class="table table-responsive table-striped table-bordered">
 			<tr>
 				<th>ID</th>
+				<th>Photo</th>
 				<th>Name</th>
 				<th>email</th>
 				<th>created at</th>
@@ -74,6 +75,7 @@ include('header.php');
 
 				<tr>
 					<td><?= $value2['id'] ?></td>
+					<td><img class="image-circle smallpic" src="<?= $value2['profile_img_path']?>" alt="user_photo"></td>
 					<td><a href="/users/show/<?= $value2['id']?>"> <?php echo $value2['first_name']." ".$value2['last_name']; ?></a></td>
 					<td><a href="mailto: <?= $value2['email'] ?>" ><?= $value2['email'] ?></a></td>
 					<td><?= date('M dS Y',strtotime($value2['created_at'])) ?></td>
@@ -104,6 +106,7 @@ include('header.php');
 			<table class="table table-responsive table-striped table-bordered">
 			<tr>
 				<th>ID</th>
+				<th>Photo</th>
 				<th>Name</th>
 				<th>email</th>
 				<th>created at</th>
@@ -115,6 +118,7 @@ include('header.php');
 			?>	
 				<tr>		
 				<td><?= $value2['id'] ?></td>
+				<td><img class="image-circle smallpic" src="<?= $value2['profile_img_path']?>" alt="user_photo"></td>
 				<td><a href="/users/show/<?= $value2['id']?> "> <?php echo $value2['first_name']." ".$value2['last_name']; ?></td>
 				<td><?= $value2['email'] ?></td>
 				<td><?= date('M dS Y',strtotime($value2['created_at'])) ?></td>
