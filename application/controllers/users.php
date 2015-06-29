@@ -8,6 +8,10 @@ class Users extends CI_Controller {
 	{
 		parent::__construct();
 		// $this->output->enable_profiler();
+
+		$this->load->helper('security');
+		$this->load->library('form_validation');
+		$this->load->model('User');
 	
 	}
 
@@ -24,12 +28,12 @@ class Users extends CI_Controller {
 	public function create()
 	{	
 		//validate forms
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('first_name', 'First Name', 'alpha|trim|required');
-		$this->form_validation->set_rules('last_name', 'Last Name', 'alpha|trim|required');
-		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|required');
-		$this->form_validation->set_rules('password', 'password', 'trim|required|matches[password2]');
-		$this->form_validation->set_rules('password2', 'password2', 'trim|required');
+		
+		$this->form_validation->set_rules('first_name', 'First Name', 'alpha|trim|xss_clean|required');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'alpha|trim|xss_clean|required');
+		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|xss_clean|required|is_unique[users.email]');
+		$this->form_validation->set_rules('password', 'password', 'trim|required|xss_clean|matches[password2]');
+		$this->form_validation->set_rules('password2', 'password2', 'trim|xss_clean|required');
 
 		if($this->form_validation->run()=== FALSE)
 		{
@@ -39,14 +43,6 @@ class Users extends CI_Controller {
 
 		}
 
-		// check passwords match 
-
-		else if($this->input->post('password') !== $this->input->post('password2'))
-
-		{
-			$this->session->set_flashdata('messages', "Passwords should match");
-			$this->load->view('register');
-		}
 		else // if everything is ok, proceed to user insert to database
  		{
 			
@@ -64,7 +60,7 @@ class Users extends CI_Controller {
 			);
 		
 
-			$this->load->model('User');
+			
 			$result = $this->User->insert($data);	
 
 			if($result)
@@ -75,10 +71,8 @@ class Users extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('messages', 'Email already exists');
-		
-                redirect(base_url('register'));
-			}
+
+			}	
 
 		}
 
@@ -88,6 +82,7 @@ class Users extends CI_Controller {
 
 
 
+	// login function 
 
 	public function login()
 	{
@@ -98,13 +93,23 @@ class Users extends CI_Controller {
 		}
 		else
 		{
-		
+			// ADD VALIDATION CHECK ON SIGNIN!
+			// $this->form_validation->set_rules('email', 'Email', 'valid_email|trim|xss_clean|required');
+			// $this->form_validation->set_rules('password', 'password', 'trim|required|xss_clean');
+			
 
-		$email = $this->input->post('email');
-		$password = md5($this->input->post('password'));
-		$this->load->model('User');
-		$user = $this->User->get_user_by_email($email);
+			// if($this->form_validation->run()=== FALSE)
+			// {
+			// 	$this->view_data['errors'] = validation_errors();
+			// 	$this->session->set_flashdata('messages', $this->view_data['errors']);
+			// 	$this->load->view('signin');
 
+			// }
+
+
+			$email = $this->input->post('email');
+			$password = md5($this->input->post('password'));
+			$user = $this->User->get_user_by_email($email);
 
 		if($user && $user['password'] == $password)
 		{
@@ -120,15 +125,8 @@ class Users extends CI_Controller {
 
 
 			$this->session->set_userdata('user',$user);
-
-			if($user['user_level']== 'admin'){
-
-				redirect(base_url('dashboard/'.$user['user_level']));	
-			}
-			else{
+			redirect(base_url('dashboard/'.$user['user_level']));	
 			
-            redirect(base_url('dashboard/'.$user['user_level']));
-            }
 		}
 		else
 		{
@@ -216,10 +214,6 @@ class Users extends CI_Controller {
 		
 		$this->edit($user_id);
 		
-		// $this->load->model('User');
-		// $result['result'] = $this->User->get_user_by_id($num);
-
-		// $this->load->view('edit/', $result);	
 
 	}
 
@@ -243,9 +237,9 @@ class Users extends CI_Controller {
 
 		
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
-		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('first_name', 'First Name', 'alpha|trim|xss_clean|required');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'alpha|trim|xss_clean|required');
+		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|xss_clean|required');
 
 		
 

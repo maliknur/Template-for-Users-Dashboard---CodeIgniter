@@ -15,6 +15,8 @@ class Walls extends CI_Controller {
 
 	public function show($num)
 	{	$this->load->model('User');
+	
+
 		$result = $this->User->get_user_by_id($num);
 
 		$this->load->model('Wall');

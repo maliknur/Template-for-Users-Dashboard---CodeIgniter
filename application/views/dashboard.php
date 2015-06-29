@@ -115,7 +115,7 @@ include('header.php');
 			?>	
 				<tr>		
 				<td><?= $value2['id'] ?></td>
-				<td><a href="/users/show/ <?= $value2['id']?> "> <?php echo $value2['first_name']." ".$value2['last_name']; ?></td>
+				<td><a href="/users/show/<?= $value2['id']?> "> <?php echo $value2['first_name']." ".$value2['last_name']; ?></td>
 				<td><?= $value2['email'] ?></td>
 				<td><?= date('M dS Y',strtotime($value2['created_at'])) ?></td>
 				<td><?= $value2['user_level'] ?></td>	

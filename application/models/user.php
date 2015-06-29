@@ -103,6 +103,7 @@ class User extends CI_Model {
 
 	public function check_email($data)
 	{
+		var_dump($data);
 		$condition = "email =". "'".$data['email']."'";
 		$this->db->select('*');
 		$this->db->from('users');
@@ -111,6 +112,7 @@ class User extends CI_Model {
 		$query = $this->db->get();
 		
 		$query_row = $query->result();
+
 
 		$id = $query_row[0]->id;
 		
@@ -130,11 +132,6 @@ class User extends CI_Model {
 
 
 
-
-
-
-			
-	
 
 
 	} 
