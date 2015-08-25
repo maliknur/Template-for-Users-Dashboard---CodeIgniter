@@ -14,6 +14,11 @@ body{
 	text-decoration: none;
 }
 
+.logoff {
+	
+	margin-top: 12px;
+}
+
 
 .panel{
 
@@ -123,12 +128,19 @@ p {
 	margin-right: 10px;
 }
 
+.headerpic{
+	width: 30px;
+	height: 30px;
+	-webkit-border-radius: 15px;
+	        border-radius: 15px;
+}
+
 
 table tr td{
 	vertical-align: middle;
 }
 
-.jumbotron{
+#jumbotron{
 	background: url('../../assets/bg2.jpg');
 	background-size:cover;
 	background-position: 0px 315px;

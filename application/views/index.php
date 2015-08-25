@@ -21,7 +21,7 @@
 	<!-- JUMBOTRON part -->
 	<div class="container">
 		
-		  <div class="jumbotron ">
+		  <div class="jumbotron " id="jumbotron">
 		  	<h1>Welcome to the Userboard</h1>
 		  	<p>We are going to build a cool application using MVC framework! This application was built with Coding Dojo member</p>
 		  	<div class="btn-group">

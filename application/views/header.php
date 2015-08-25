@@ -14,11 +14,11 @@
 		<?php if(!empty($this->session->userdata('user')))
 				{
 					$user = $this->session->userdata('user');
-					echo "<a href=\"/logoff\" class=\"navbar-btn navbar-right\">Log off</a>";
+					echo "<a href=\"/logoff\" class=\"navbar-btn navbar-right logoff\">Log off</a>";
 			 	} 
 			 	else 
 			 	{
-					echo "<a href=\"signin\" class=\"navbar-btn navbar-right\">Sign in</a>";
+					echo "<a href=\"signin\" class=\"navbar-btn navbar-right logoff\">Sign in</a>";
 				}
 				?>	
 				<ul class="nav navbar-nav">
@@ -31,7 +31,8 @@
 				<?php 
 				if(!empty($this->session->userdata('user')))
 				{ ?>
-					<span class="navbar-right navbar-btn" id="user_logoff">
+					
+					<span class="navbar-right navbar-btn" id="user_logoff"><span><img class="image-circle headerpic smallavatar" src="<?= $user['userpic'] ?>" alt=""></span>
 				<?php
 					echo $user['first_name']." ".$user['last_name'] ."&nbsp;&nbsp; </span>";
 				 
