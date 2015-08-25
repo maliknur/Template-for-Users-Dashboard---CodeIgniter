@@ -2,37 +2,41 @@
 <html lang="en">
 <head>
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="../../assets/main.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="../../assets/main.css">
 	<meta charset="UTF-8">
 	<meta name="author" content="Malik Nur">
+
 	<title>Edit user</title>
 </head>
+
 <body>
+
 <?php include('header.php'); ?>
 
 
 <div class="row">
 	<div id="return_dash">
-	<a href="/dashboard" class="btn btn-info col-lg-offset-10 col-md-offset-5 col-xs-offset-1">Return to Dashboard</a>
+		<a href="/dashboard" class="btn btn-info col-lg-offset-10 col-md-offset-5 col-xs-offset-1">Return to Dashboard</a>
 	</div>
 
 </div>
+
 <div class="row">
-	
-<div id="panel_left"	
-class="col-md-5 col-md-offset-1">
+
+<div id="panel_left" class="col-md-5 col-md-offset-1">
 	<div class="panel panel-default">
-	  <div class="panel-heading"><h4>Edit information</h4></div>
+	  <div class="panel-heading">
+	  	<h4>Edit information</h4>
+	  </div>
+	  
 	  <div class="panel-body">
 	
 
 	<!-- FORM FOR UPDATE USER INFO -->
-	    <form action="/update" method="post" class="form-horizontal">
+	    <form action="/update" method="post" class="form-horizontal" enctype="multipart/form-data">
 			<?php 
 			if(!empty($this->session->flashdata('messages')))
 			{
@@ -73,37 +77,51 @@ class="col-md-5 col-md-offset-1">
 				<input class="col-lg-6" type="text" name="last_name" value="<?= $result['last_name']; ?>">
 			</div>
 			</div>
+			
 			<?php  
 
 				$user = $this->session->userdata('user');
 				
+				// admin and normal users have different level of details access
+
 				if($user['user_level']== 'admin'){
 
-		echo  "<div class=\"form-group\">
-				<label for=\"level\" class=\"col-lg-5 control-label\">User level:</label>
-			<div class=\"col-lg-7\">
-				<select class=\"col-lg-6 form-control\" id=\"select\"  name=\"user_level\">";
+			?>		
+				<div class="form-group">
+					<label for="level" class="col-lg-5 control-label">User level:</label>
+				<div class="col-lg-7">
+				
+				<select class="col-lg-6 form-control" id="select"  name="user_level">
 				
 					
-					if($result['user_level'] == 'normal'){ 
-						echo "<option  value=\"normal\" selected =\"selected\">normal 
-						</option>";
-						echo "<option value=\"admin\">admin</option>
-						</select>";
-					}
-					else { 
-						echo "<option  value=\"admin\" selected =\"selected\">admin 
-						</option>";
-						echo "<option value=\"normal\">normal</option>
-						</select>";
-					}
+			<?php		if($result['user_level'] == 'normal'){  ?>
+						<option  value="normal" selected ="selected">normal 
+						</option>
+						<option value="admin">admin</option>
+						</select>
+			<?php		}
+					else { ?>
+						<option  value="admin" selected ="selected">admin 
+						</option>
+						<option value="normal">normal</option>
+						</select>
+			<?php		} ?>
 
 
-					echo "</div></div>";
-				}
+					</div></div>
+			<?php	}
 				?>
 			
-			
+			<div class="form-group" style="position:relative;">
+					<label class="col-lg-5 control-label"><a class='btn btn-default' href='javascript:;'>
+					Upload photo...
+					<input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' 
+					name="profile_img_path" size="20"  onchange='$("#upload-file-info").html($(this).val());'>
+				</a></label>
+					<div>
+					<span class='col-lg-6 label label-info ' id="upload-file-info"></span>
+					</div>
+				</div>
 			<div class="form-group">
 				<div >
 					<button type="submit" class="col-lg-2 col-lg-offset-9 btn btn-success">
@@ -114,7 +132,8 @@ class="col-md-5 col-md-offset-1">
 			
 		</form>
 	  </div>
-</div>
+
+	</div>
 		
 </div>
 

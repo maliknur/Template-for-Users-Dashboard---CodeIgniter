@@ -4,40 +4,40 @@
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="../../assets/main.css">
+	
 	<meta charset="UTF-8">
 	<meta name="author" content="Malik Nur">
 	<title>User Information</title>
 </head>
 <body>
+
 <?php include('header.php'); ?>
 
 <div class="container">
 <div class="row">
-<div class="col-lg-10">
-<h3><?= $result['first_name'] . " " . $result['last_name'] ?></h3>
-<table id="wall_table" class="table table-condensed ">
-	<tr>
-		<th>Registered at:</th>
-		<td><?= date('M dS Y', strtotime($result['created_at'])) ?></td>
-	</tr>
-	<tr>
-		<th>User ID:</th>
-		<td><?= "# " .$result['id'] ?></td>
-	</tr>
-	<tr>
-		<th>Email address:</th>
-		<td><?= $result['email'] ?></td>
-	</tr>
-	<tr>
-		<th>Description:</th>
-		<td><?= $result['description'] ?></td>
-	</tr>
-</table>
-</div>
+	<div class="col-lg-10">
+	<h3><?= $result['first_name'] . " " . $result['last_name'] ?></h3>
+	<table id="wall_table" class="table table-condensed ">
+		<tr>
+			<th>Registered at:</th>
+			<td><?= date('M dS Y', strtotime($result['created_at'])) ?></td>
+		</tr>
+		<tr>
+			<th>User ID:</th>
+			<td><?= "# " .$result['id'] ?></td>
+		</tr>
+		<tr>
+			<th>Email address:</th>
+			<td><?= $result['email'] ?></td>
+		</tr>
+		<tr>
+			<th>Description:</th>
+			<td><?= $result['description'] ?></td>
+		</tr>
+	</table>
+	</div>
 </div>	
 
 <div class="row">

@@ -13,14 +13,11 @@ body{
 	color:white;
 	text-decoration: none;
 }
-#user_logoff:hover{
-	color:white;
-	text-decoration: none;
-}
+
 
 .panel{
 
-	margin-top: 40px;
+	margin-top: 20px;
 	margin-right: 20px;
 	margin-left: 20px;
 }
@@ -29,9 +26,6 @@ body{
 	margin-left: -18px;
 }
 
-#select{
-	
-}
 
 #return_dash{
 	margin-top: 10px;
@@ -73,6 +67,11 @@ li{
 	display: block;
 }
 
+small{
+	
+	float: right;
+}
+
 
 .bordered1{
 	
@@ -89,5 +88,50 @@ textarea[name=comment]{
 }
 
 
+p {
+	text-align: justify;
+}
 
+#return_dash{
+	margin-top: 30px;
+}
+
+#upload-file-info{
+	white-space: pre;          
+	white-space: pre-wrap;      
+	white-space: pre-line;      
+	white-space: -pre-wrap;     
+	white-space: -o-pre-wrap;   
+	white-space: -moz-pre-wrap; 
+	word-wrap: break-word;      
+}
+
+.img-circle{
+	margin-top: 10px;
+	width: 100px;
+	height: 100px;
+}
+
+.smallpic{
+	width: 50px;
+	height: 50px;
+	-webkit-border-radius: 25px;
+	        border-radius: 25px;
+}
+
+.smallavatar{
+	margin-right: 10px;
+}
+
+
+table tr td{
+	vertical-align: middle;
+}
+
+.jumbotron{
+	background: url('../../assets/bg2.jpg');
+	background-size:cover;
+	background-position: 0px 315px;
+	color: #FFF;
+}
 

@@ -8,6 +8,11 @@ class Users extends CI_Controller {
 	{
 		parent::__construct();
 		// $this->output->enable_profiler();
+
+		$this->load->helper('security');
+		$this->load->library('form_validation');
+		$this->load->library('upload');
+		$this->load->model('User');
 	
 	}
 
@@ -24,12 +29,12 @@ class Users extends CI_Controller {
 	public function create()
 	{	
 		//validate forms
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('first_name', 'First Name', 'alpha|trim|required');
-		$this->form_validation->set_rules('last_name', 'Last Name', 'alpha|trim|required');
-		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|required');
-		$this->form_validation->set_rules('password', 'password', 'trim|required|matches[password2]');
-		$this->form_validation->set_rules('password2', 'password2', 'trim|required');
+		
+		$this->form_validation->set_rules('first_name', 'First Name', 'alpha|trim|xss_clean|required');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'alpha|trim|xss_clean|required');
+		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|xss_clean|required|is_unique[users.email]');
+		$this->form_validation->set_rules('password', 'password', 'trim|required|xss_clean|matches[password2]');
+		$this->form_validation->set_rules('password2', 'password2', 'trim|xss_clean|required');
 
 		if($this->form_validation->run()=== FALSE)
 		{
@@ -39,17 +44,14 @@ class Users extends CI_Controller {
 
 		}
 
-		// check passwords match 
-
-		else if($this->input->post('password') !== $this->input->post('password2'))
-
-		{
-			$this->session->set_flashdata('messages', "Passwords should match");
-			$this->load->view('register');
-		}
 		else // if everything is ok, proceed to user insert to database
  		{
 			
+
+				
+			$img_url = $this->image_upload();	// upload user photo profile
+			
+
 
 			$data = array(
 
@@ -60,11 +62,12 @@ class Users extends CI_Controller {
 			'created_at'=>date('Y-m-d H:i:s', time()),
 			'updated_at'=>date('Y-m-d H:i:s', time()),
 			'user_level' => "normal",
-			'description' => "No description yet"
+			'description' => "No description yet",
+			'profile_img_path'=>$img_url
 			);
 		
 
-			$this->load->model('User');
+			
 			$result = $this->User->insert($data);	
 
 			if($result)
@@ -75,10 +78,8 @@ class Users extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('messages', 'Email already exists');
-		
-                redirect(base_url('register'));
-			}
+
+			}	
 
 		}
 
@@ -86,8 +87,38 @@ class Users extends CI_Controller {
 
 
 
+	//upload image function
+	public function image_upload()
+	{
+
+			//image upload settings:
+		$config['upload_path'] = './uploads/profilepics';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size'] = 250;
+		$this->load->library('upload', $config);
+
+		$this->upload->initialize($config);
+		
+
+		$this->upload->do_upload('profile_img_path');
+		
+		if (!$this->upload->do_upload('profile_img_path')) {
+		    $error = array('error' => $this->upload->display_errors());
+		    echo $error['error'];
+		}
 
 
+		$data_upload_files = $this->upload->data();
+
+		$image = $data_upload_files['full_path']; 	
+			
+		return $img_url = strstr($image, '/up');	
+
+	}
+
+
+
+	// login function 
 
 	public function login()
 	{
@@ -98,13 +129,23 @@ class Users extends CI_Controller {
 		}
 		else
 		{
-		
+			// ADD VALIDATION CHECK ON SIGNIN!
+			// $this->form_validation->set_rules('email', 'Email', 'valid_email|trim|xss_clean|required');
+			// $this->form_validation->set_rules('password', 'password', 'trim|required|xss_clean');
+			
 
-		$email = $this->input->post('email');
-		$password = md5($this->input->post('password'));
-		$this->load->model('User');
-		$user = $this->User->get_user_by_email($email);
+			// if($this->form_validation->run()=== FALSE)
+			// {
+			// 	$this->view_data['errors'] = validation_errors();
+			// 	$this->session->set_flashdata('messages', $this->view_data['errors']);
+			// 	$this->load->view('signin');
 
+			// }
+
+
+			$email = $this->input->post('email');
+			$password = md5($this->input->post('password'));
+			$user = $this->User->get_user_by_email($email);
 
 		if($user && $user['password'] == $password)
 		{
@@ -114,21 +155,15 @@ class Users extends CI_Controller {
 				'last_name' => $user['last_name'],
 				'email' => $user['email'],
 				'user_level'=> $user['user_level'],
+				'userpic' => $user['profile_img_path'],
 				'is_logged_in' => true
 
 			);
 
 
 			$this->session->set_userdata('user',$user);
-
-			if($user['user_level']== 'admin'){
-
-				redirect(base_url('dashboard/'.$user['user_level']));	
-			}
-			else{
+			redirect(base_url('dashboard/'.$user['user_level']));	
 			
-            redirect(base_url('dashboard/'.$user['user_level']));
-            }
 		}
 		else
 		{
@@ -216,10 +251,6 @@ class Users extends CI_Controller {
 		
 		$this->edit($user_id);
 		
-		// $this->load->model('User');
-		// $result['result'] = $this->User->get_user_by_id($num);
-
-		// $this->load->view('edit/', $result);	
 
 	}
 
@@ -231,20 +262,25 @@ class Users extends CI_Controller {
 
 	public function update()
 	{
+
+		$img_url = $this->image_upload();
+
+
 		$data = array(
 					'id' => $this->input->post('user_id'),
 					'first_name' => $this->input->post('first_name'),
 					'last_name' => $this->input->post('last_name'),
 					'email'=> $this->input->post('email'),
-					'user_level' => $this->input->post('user_level')
+					'updated_at' => date('Y-m-d H:i:s', time()),
+					'user_level' => $this->input->post('user_level'),
+					'profile_img_path' => $img_url 
 				);
-
 
 		
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
-		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('first_name', 'First Name', 'alpha|trim|xss_clean|required');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'alpha|trim|xss_clean|required');
+		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|xss_clean|required');
 
 		
 
